@@ -6,13 +6,12 @@ class Solution {
         map.put(0,-1);
         for(int i=0;i<nums.length;i++){
             if(nums[i]==0)
-                sum += -1;
+                sum --;
             else
-                sum += 1;
+                sum ++;
 
             if(map.containsKey(sum)){
-                int length = i-map.get(sum);
-                answer=Math.max(answer,length);
+                answer=Math.max(answer,i-map.get(sum));
             }
             else
                 map.put(sum,i);
