@@ -1,30 +1,29 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        backtrack(result, new ArrayList<>(), nums, new boolean[nums.length]);
+        List<List<Integer>> result= new ArrayList<>();
+        List<Integer> path=new ArrayList<>();
+        boolean[] used=new boolean[nums.length];
+
+        backtrack(nums,used,path,result);
         return result;
+
     }
-    
-    private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, boolean[] used) {
-        // Base case: if the path is the same length as nums, we found a permutation
-        if (tempList.size() == nums.length) {
-            result.add(new ArrayList<>(tempList));
+    private void backtrack(int[] nums,boolean[] used,List<Integer> path,List<List<Integer>> result){
+        if(path.size()==nums.length){
+            result.add(new ArrayList<>(path));
             return;
         }
-        
-        for (int i = 0; i < nums.length; i++) {
-            if (used[i]) continue; // element already used
-            
-            // Choose
-            used[i] = true;
-            tempList.add(nums[i]);
-            
-            // Explore
-            backtrack(result, tempList, nums, used);
-            
-            // Un-choose (Backtrack)
-            tempList.remove(tempList.size() - 1);
-            used[i] = false;
+        for(int i=0;i<nums.length;i++){
+            if(used[i]==true){
+                continue;
+            }
+            path.add(nums[i]);
+            used[i]=true;
+
+            backtrack(nums,used,path,result);
+
+            used[i]=false;
+            path.remove(path.size()-1);
         }
     }
 }
